@@ -56,6 +56,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'EasyBuy.urls'
+AUTH_USER_MODEL = 'user.UserProfile'
 
 TEMPLATES = [
     {
@@ -128,3 +129,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# 发送邮箱
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "918128078@qq.com"
+#邮箱名
+EMAIL_HOST_PASSWORD = "ojaycikepkcabchb"
+#密码
+EMAIL_USE_TLS= True
+EMAIL_FROM = "918128078@qq.com"
+#邮箱名
