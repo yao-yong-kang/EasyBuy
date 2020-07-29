@@ -53,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'EasyBuy.urls'
+AUTH_USER_MODEL = 'user.UserProfile'
 
 TEMPLATES = [
     {

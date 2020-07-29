@@ -1,14 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+import datetime
 
 
 # Create your models here.
-class User(models.Model):
-    loginName = models.CharField(max_length=25, null=False, verbose_name='登录名')
+class UserProfile(AbstractUser):
     nickName = models.CharField(max_length=25, null=True, verbose_name='昵称')
-    password = models.CharField(max_length=25, null=False, verbose_name='密码')
-    sex = models.IntegerField(max_length=1, default=1, verbose_name='性别1为男0为女')
-    idcard = models.CharField(max_length=20, default=None, verbose_name='身份证')
-    email = models.CharField(max_length=80, default=None, verbose_name='邮箱')
-    mobile = models.IntegerField(max_length=11, default=None, verbose_name='手机号')
-    time = models.DateTimeField(default=None, verbose_name='登录时间')
-    score = models.IntegerField(max_length=11, default=0, verbose_name='积分')  # 100scroe=1￥
+    sex = models.IntegerField(default='未设置', verbose_name='性别1为男0为女')
+    idcard = models.CharField(max_length=20, default='未设置', verbose_name='身份证')
+    email = models.CharField(max_length=30, unique=True, verbose_name='邮箱')
+    mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
+    time = models.DateTimeField(default='', verbose_name='登录时间')
+    score = models.IntegerField(default=0, verbose_name='积分')  # 100scroe=1￥
+    money = models.IntegerField(default=0, verbose_name='余额')
+    cost = models.IntegerField(default=0, verbose_name='总消费')
+    code = models.CharField(max_length=10, verbose_name='邮箱激活码')
