@@ -9,7 +9,7 @@ class UserProfile(AbstractUser):
     email = models.CharField(max_length=30, unique=True, verbose_name='邮箱')
     mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
     time = models.DateTimeField(auto_now=True, verbose_name='登录时间')
-    score = models.IntegerField(default=0, verbose_name='积分')  # 100scroe=1￥
+    score = models.IntegerField(default=0, verbose_name='积分')  # 100scroe=1￥git
     money = models.IntegerField(default=0, verbose_name='余额')
     cost = models.IntegerField(default=0, verbose_name='总消费')
     photo = models.ImageField(upload_to='img/%Y/%m', default='default.jpg', verbose_name='头像')
