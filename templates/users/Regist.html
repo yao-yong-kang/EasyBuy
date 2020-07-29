@@ -1,6 +1,9 @@
+{% load static %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link type="text/css" rel="stylesheet" href="../../static/css/style.css" />
     <!--[if IE 6]>
@@ -37,7 +40,7 @@
 <div class="soubg">
 	<div class="sou">
         <span class="fr">
-        	<span class="fl">你好，请<a href="Login.html">登录</a>&nbsp; <a href="Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp; </span>
+        	<span class="fl">你好，请<a href="{% url 'user:login' %}">登录</a>&nbsp; <a href="{% url 'user:register' %}" style="color:#ff4e00;">免费注册</a>&nbsp; </span>
             <span class="fl">|&nbsp;关注我们：</span>
             <span class="s_sh"><a href="#" class="sh1">新浪</a><a href="#" class="sh2">微信</a></span>
             <span class="fr">|&nbsp;<a href="#">手机版&nbsp;<img src="../../static/images/s_tel.png" align="absmiddle" /></a></span>
@@ -45,6 +48,7 @@
     </div>
 </div>
 <!--End Header End--> 
+<!--End Header End-->
 <!--Begin Login Begin-->
 <div class="log_bg">	
     <div class="top">
@@ -53,50 +57,58 @@
 	<div class="regist">
     	<div class="log_img"><img src="../../static/images/l_img.png" width="611" height="425" /></div>
 		<div class="reg_c">
-        	<form>
+        	<form method="post"  autocomplete="on">
+
             <table border="0" style="width:420px; font-size:14px; margin-top:20px;" cellspacing="0" cellpadding="0">
               <tr height="50" valign="top">
               	<td width="95">&nbsp;</td>
                 <td>
                 	<span class="fl" style="font-size:24px;">注册</span>
-                    <span class="fr">已有商城账号，<a href="Login.html" style="color:#ff4e00;">我要登录</a></span>
+                    <span class="fr">已有商城账号，<a href="{% url 'user:login' %}" style="color:#ff4e00;">我要登录</a></span>
                 </td>
               </tr>
-              <tr height="50">
+              <tr height="50" class="form-group marb20 {% if register_form.errors.username %}errorput{% endif %}">
+{#                  <label align="right"><font color="#ff4e00">*</font>&nbsp; 用户名 </label>#}
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;用户名 &nbsp;</td>
-                <td><input type="text" value="" class="l_user" /></td>
+
+                <td><input name="username"  type="text"  class="l_user" placeholder="用户名" required="on" maxlength="10"/></td>
               </tr>
+
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;密码 &nbsp;</td>
-                <td><input type="password" value="" class="l_pwd" /></td>
+                <td><input name='password1'  type="password" value="" class="l_pwd" required="on" placeholder="密码"/></td>
               </tr>
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;确认密码 &nbsp;</td>
-                <td><input type="password" value="" class="l_pwd" /></td>
+                <td><input name="password2" type="password" value="" class="l_pwd" required="on"/></td>
               </tr>
-              <tr height="50">
-                <td align="right"><font color="#ff4e00">*</font>&nbsp;邮箱 &nbsp;</td>
-                <td><input type="text" value="" class="l_email" /></td>
+              <tr height="50" >
+                <td align="right" ><font color="#ff4e00">*</font>&nbsp;邮箱 &nbsp;</td>
+                <td >
+                    <input name="email" type="email" value="" class="l_email" required="on"/>
+                </td>
               </tr>
               <tr height="50">
                 <td align="right"><font color="#ff4e00">*</font>&nbsp;手机 &nbsp;</td>
-                <td><input type="text" value="" class="l_tel" /></td>
+                <td><input name="tel" type="text" value="" class="l_tel" required="on"/></td>
               </tr>
+{#              <tr height="50">#}
+{#                <td align="right">邀请人会员名 &nbsp;</td>#}
+{#                <td><input type="text" value="" class="l_mem" /></td>#}
+{#              </tr>#}
+{#              <tr height="50">#}
+{#                <td align="right">邀请人ID号 &nbsp;</td>#}
+{#                <td><input type="text" value="" class="l_num" /></td>#}
+{#              </tr>#}
               <tr height="50">
-                <td align="right">邀请人会员名 &nbsp;</td>
-                <td><input type="text" value="" class="l_mem" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right">邀请人ID号 &nbsp;</td>
-                <td><input type="text" value="" class="l_num" /></td>
-              </tr>
-              <tr height="50">
-                <td align="right"> <font color="#ff4e00">*</font>&nbsp;验证码 &nbsp;</td>
-                <td>
-                    <input type="text" value="" class="l_ipt" />
-                    <a href="#" style="font-size:12px; font-family:'宋体';">换一张</a>
+                <td align="right" > <font color="#ff4e00">*</font>&nbsp;验证码 &nbsp;</td>
+                <td >
+{#                    <input type="text" value="" class="l_ipt" />#}
+{#                    <a href="#" style="font-size:12px; font-family:'宋体';">换一张</a>#}
+                    {{ register_form.captcha }}
                 </td>
               </tr>
+
               <tr>
               	<td>&nbsp;</td>
                 <td style="font-size:12px; padding-top:20px;">
@@ -107,9 +119,16 @@
               </tr>
               <tr height="60">
               	<td>&nbsp;</td>
-                <td><input type="submit" value="立即注册" class="log_btn" /></td>
+                <td><input type="submit" id="btn_submit" value="立即注册" class="log_btn" /></td>
               </tr>
+                <tr height="100">
+                    {% for key,error in register_form.errors.items %}
+                            <td >{{ error }}</td>
+                            {% endfor %}
+                            <td>{{ msg }}</td>
+                </tr>
             </table>
+
             </form>
         </div>
     </div>
@@ -127,7 +146,47 @@
 </body>
 
 
-<!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
-<![endif]-->
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"></script>
+
+<script>
+
+//验证码动态刷新实现
+$('.captcha').click(function () {
+    $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+    });
+});
+
+{#//后端返回验证失败后的动作#}
+{#if('{{ status }}' == 'error'){#}
+{#    alert("验证失败，请重新登录！");#}
+{#    window.location.assign("/user/register/")#}
+
+{#$('#btn_submit').click(function () {#}
+{#        $.ajax({#}
+{#            url: '/register/',#}
+{#            type: 'post',#}
+{#            data: {#}
+{#                'csrfmiddlewaretoken': '{{ csrf_token }}',#}
+{#                'username': $('#id_username').val(),#}
+{#                'password1': $('#id_password1').val(),#}
+{#                'password2': $('#id_password2').val(),#}
+{#                'tel': $('#id_tel').val(),#}
+{#                'email': $('#id_email').val(),#}
+{##}
+{#                'captcha_1': $('#id_captcha_1').val(),#}
+{#                'captcha_0': $('#id_captcha_0').val(),#}
+{#            },#}
+{#            success: function (args) {#}
+{#                alert(args);#}
+{#            }#}
+{#        })#}
+{#    })#}
+
+</script>
 </html>
