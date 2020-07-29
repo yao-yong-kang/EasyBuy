@@ -1,7 +1,7 @@
 from random import Random
 
 from EasyBuy.settings import EMAIL_FROM #导入模型
-from user.models import UserProfile #导入模型
+from user.models import EmailVerify #导入模型
 from django.core.mail import send_mail #导入发送邮件
 
 def random_str(random_length=8):
@@ -14,14 +14,22 @@ def random_str(random_length=8):
     return str
 
 
-
 def send_register_email(email):
-    email_record = UserProfile()
+    email_record = EmailVerify()
     code = random_str(16)
 
     email_record.code = code
     email_record.email = email
-    email_record.code = code
+    email_record.save()
+
+    email_title = "易买网注册激活链接"
+    email_body = "请点击下面的链接激活你的账号: http://127.0.0.1:8000/active/{0}".format(code)
+
+    # 使用Django内置函数完成邮件发送。四个参数：主题，邮件内容，从哪里发，接受者list
+    send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+    # 如果发送成功
+    if send_status:
+        pass
 
 
 

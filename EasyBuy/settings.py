@@ -70,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 把media全局注册进template模板中
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -130,6 +132,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+# 配置media资源文件目录
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # 发送邮箱
 EMAIL_HOST = "smtp.qq.com"
 EMAIL_PORT = 25
@@ -140,3 +146,4 @@ EMAIL_HOST_PASSWORD = "ojaycikepkcabchb"
 EMAIL_USE_TLS= True
 EMAIL_FROM = "918128078@qq.com"
 #邮箱名
+

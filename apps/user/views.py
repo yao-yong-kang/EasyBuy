@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Q
-from user.models import UserProfile
+from user.models import UserProfile,EmailVerify
 from django.views.generic.base import View
-from django.contrib.auth import authenticate,login,logout
 from .forms import RegisterForm
 from django.contrib.auth.hashers import make_password
-
+from utils.send_email import send_register_email
 
 #注册
 class RegisterView(View):
@@ -23,8 +22,8 @@ class RegisterView(View):
             if UserProfile.objects.filter(username=user_name):
                 return render(request,'users/Regist.html',{'register_form':register_form,'msg': '用户已存在'})
 
-            password1 = request.POST.get('password', None)
-            password2 = request.POST.get('password', None)
+            password1 = request.POST.get('password1', None)
+            password2 = request.POST.get('password2', None)
             email = request.POST.get('email', None)
             tel = request.POST.get('tel', None)
             if password1 == password2:
@@ -32,37 +31,36 @@ class RegisterView(View):
                 # 实例化UserProfile对象
                 user_profile.username = user_name
                 user_profile.email = email
-                user_profile.mobile = tel
-                user_profile.is_active = False
+                user_profile.mobile = int(tel)
+
+                user_profile.is_active=False
+
                 user_profile.password = make_password(password1)
                 user_profile.save()
+                send_register_email(email)
+                return render(request,'users/Login.html')
+            else:
+                return render(request, 'users/Regist.html', {'register_form': register_form})
+        else:
+            return render(request, 'users/Regist.html', {'register_form': register_form})
+
+#激活邮箱验证码
+class ActiveUserView(View):
+    def get(self,request,active_code):
+        all = EmailVerify.objects.filter(code = active_code)
+        if all:
+            for i in all:
+                email = i.email
+                user = UserProfile.objects.get(email = email)
+
+                user.is_active = True
+                user.save()
+
+        else:
+            return render(request,'users/active_fail.html')
 
 
-
-            # user_name = request.POST.get('username', None)
-
-
-
-
-            # username = register_form.cleaned_data['username']
-            # password1 = register_form.cleaned_data['password1']
-            # password2 = register_form.cleaned_data['password2']
-            # email = register_form.cleaned_data['email']
-            # tel = register_form.cleaned_data['tel']
-            # user = authenticate
-
-
-
-            # else:
-            #     if password1 == password2:
-            #         pwd = make_password(password1)
-            #         UserProfile.objects.create(username=username, password=pwd, email=email, mobile=tel)
-            #         return render(request, 'users/Login.html')
-            #
-            #     return render(request, 'users/Regist.html', {'register_form': register_form})
-
-        return render(request,'users/Regist.html')
-
+        return render(request,'users/Login.html')
 
 class LoginView(View):
     def get(self,request):
