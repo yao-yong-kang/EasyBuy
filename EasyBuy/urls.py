@@ -5,6 +5,7 @@ from django.urls import path,include,re_path
 from django.views.static import serve
 from .settings import MEDIA_ROOT
 from user.views import ActiveUserView
+from goods.views import *
 
 
 urlpatterns = [
@@ -16,5 +17,6 @@ urlpatterns = [
     path('usercenter/', include('usercenter.urls', namespace='member')),
 
     url(r'^media/(?P<path>.*)$',  serve, {"document_root": MEDIA_ROOT}),  # 图片路径
+    path('product_detail/',product_detail ,name='product_detail' ),
 
 ]
