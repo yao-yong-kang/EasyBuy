@@ -34,7 +34,13 @@ class AddressAdmin(object):
 
 
 class OrderAdmin(object):
-    list_display = ['userId', 'addressId', 'productId', 'createTime', 'cost', 'number', 'quantity']
+    list_display = ['userId', 'addressId', 'createTime', 'cost', 'number']
+    search_fields = ['number']
+    list_filter = ['number', 'createTime']
+
+
+class OrderDetailAdmin(object):
+    list_display = ['productId', 'quantity', 'cost', 'orderId']
     search_fields = ['number']
     list_filter = ['number', 'createTime']
 
@@ -48,6 +54,7 @@ class UserFavAdmin(object):
 # 注册
 xadmin.site.register(Address, AddressAdmin)
 xadmin.site.register(Order, OrderAdmin)
+xadmin.site.register(Order_detail, OrderDetailAdmin)
 xadmin.site.register(UserFav, UserFavAdmin)
 
 # 将基本配置管理与view绑定
