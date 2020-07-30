@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="../../static/js/lrscroll_1.js"></script>
     
     
-<title>尤洪</title>
+<title>注册</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -113,7 +113,7 @@
               	<td>&nbsp;</td>
                 <td style="font-size:12px; padding-top:20px;">
                 	<span style="font-family:'宋体';" class="fl">
-                    	<label class="r_rad"><input type="checkbox" /></label><label class="r_txt">我已阅读并接受《用户协议》</label>
+                    	<label class="r_rad"><input type="checkbox" name="ok"/></label><label class="r_txt">我已阅读并接受《用户协议》</label>
                     </span>
                 </td>
               </tr>
@@ -123,7 +123,7 @@
               </tr>
                 <tr height="100">
                     {% for key,error in register_form.errors.items %}
-                            <td >{{ error }}</td>
+                            <td style="color: red">{{ error }}</td>
                             {% endfor %}
                             <td>{{ msg }}</td>
                 </tr>

@@ -36,11 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'car',
-    'goods',
-    'user',
-    'usercenter',
-    'captcha'
+    'car.apps.CarConfig',
+    'goods.apps.GoodsConfig',
+    'user.apps.UserConfig',
+    'usercenter.apps.UsercenterConfig',
+    'captcha',
+    'xadmin',
+    'crispy_forms',
+    'reversion',
 ]
 
 CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
@@ -87,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'easy_buy',
         'USER': 'root',
-        'PASSWORD': '741100nie',
+        'PASSWORD': '123123',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
@@ -140,10 +143,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_HOST = "smtp.qq.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "918128078@qq.com"
-#邮箱名
+# 生成的授权码
 EMAIL_HOST_PASSWORD = "ojaycikepkcabchb"
-#密码
-EMAIL_USE_TLS= True
+# 密码
+EMAIL_USE_TLS = True
 EMAIL_FROM = "918128078@qq.com"
-#邮箱名
-
