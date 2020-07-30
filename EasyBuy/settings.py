@@ -40,13 +40,16 @@ INSTALLED_APPS = [
     'goods',
     'user',
     'usercenter',
+    'captcha'
 ]
+
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -84,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'easy_buy',
         'USER': 'root',
-        'PASSWORD': '123123',
+        'PASSWORD': '741100nie',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
@@ -129,7 +132,18 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-
 # 配置media资源文件目录
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 发送邮箱
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "918128078@qq.com"
+#邮箱名
+EMAIL_HOST_PASSWORD = "ojaycikepkcabchb"
+#密码
+EMAIL_USE_TLS= True
+EMAIL_FROM = "918128078@qq.com"
+#邮箱名
+

@@ -1,9 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import datetime
+from django.utils import timezone
 
-
-# Create your models here.
 class UserProfile(AbstractUser):
     nickName = models.CharField(max_length=25, null=True, verbose_name='昵称')
     sex = models.IntegerField(default=1, verbose_name='性别1为男0为女')
@@ -14,5 +12,27 @@ class UserProfile(AbstractUser):
     score = models.IntegerField(default=0, verbose_name='积分')  # 100scroe=1￥
     money = models.IntegerField(default=0, verbose_name='余额')
     cost = models.IntegerField(default=0, verbose_name='总消费')
-    code = models.CharField(max_length=10, verbose_name='邮箱激活码')
     photo = models.ImageField(upload_to='img/%Y/%m', default='default.jpg', verbose_name='头像')
+
+
+    class Meta:
+        verbose_name = '用户信息'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.username
+
+
+class EmailVerify(models.Model):
+    code = models.CharField(max_length=20,verbose_name='验证码')
+    email = models.EmailField(max_length=50,verbose_name='邮箱')
+    send_type = models.CharField(default='注册', max_length=30)
+    send_time = models.DateTimeField(default=timezone.now())
+
+    class Meta:
+        verbose_name = '邮箱验证码'
+        verbose_name_plural = verbose_name
+
+
+
+
