@@ -9,7 +9,7 @@ class CarAdmin(object):
     # 搜索的字段
     search_fields = ['userId']
     # 过滤
-    list_filter = ['product']
+    list_filter = ['productId']
 
 
 # 注册

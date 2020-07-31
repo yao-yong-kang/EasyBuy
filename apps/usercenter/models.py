@@ -46,7 +46,7 @@ class Order_detail(models.Model):
 class UserFav(models.Model):
     userId = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户id')
     productId = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='商品id')
-    addTime = models.DateTimeField(default=datetime.datetime.now, verbose_name='添加时间')
+    addTime = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
 
     class Meta:
         verbose_name = '收藏'

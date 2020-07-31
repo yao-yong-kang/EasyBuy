@@ -14,7 +14,7 @@ class CategoryAdmin(object):
 
 class ProductAdmin(object):
     list_display = ['name', 'description', 'price', 'stock', 'categoryL1Id', 'categoryL2Id', 'categoryL3Id', 'img',
-                    'idDelete']
+                    'isDelete']
     search_fields = ['name']
     list_filter = ['name']
 

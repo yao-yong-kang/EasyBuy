@@ -41,8 +41,8 @@ class OrderAdmin(object):
 
 class OrderDetailAdmin(object):
     list_display = ['productId', 'quantity', 'cost', 'orderId']
-    search_fields = ['number']
-    list_filter = ['number', 'createTime']
+    search_fields = ['productId']
+    list_filter = ['productId']
 
 
 class UserFavAdmin(object):
