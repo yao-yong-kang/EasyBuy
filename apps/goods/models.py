@@ -13,6 +13,10 @@ class Category(models.Model):
     # 目录树
     category_type = models.IntegerField(choices=CATEGORY_TYPE)
 
+    class Meta:
+        verbose_name = '商品分类'
+        verbose_name_plural = verbose_name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=50, null=False, verbose_name='名称')
@@ -24,4 +28,9 @@ class Product(models.Model):
     categoryL3Id = models.IntegerField(default='', verbose_name='分类三')
     img = models.ImageField(upload_to='product/img/', verbose_name='商品图片')
     isDelete = models.IntegerField(default=0, verbose_name='是否删除1删除0不删除')
+
     # categoryId = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='商品分类')
+
+    class Meta:
+        verbose_name = '商品'
+        verbose_name_plural = verbose_name
