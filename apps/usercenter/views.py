@@ -1,5 +1,7 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect, reverse
-from user.models import UserProfile
+from user.models import UserProfile, Record
 from usercenter.models import Address, Order, Order_detail, UserFav
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -7,42 +9,42 @@ from django.contrib.auth.hashers import make_password, check_password
 # Create your views here.
 def memberIndex(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         user = UserProfile.objects.get(id=user.id)
         return render(request, 'usercenter/Member.html', {'user': user})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def myOrder(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         orders = Order.objects.filter(userId=user.id)
         del_id = request.GET.get('id')
         if del_id:
             Order.objects.filter(id=del_id).delete()
         return render(request, 'usercenter/Member_Order.html', {'orders': orders})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def orderDetail(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         id = request.GET.get('id')
         goods = Order_detail.objects.filter(orderId=id)
         return render(request, 'usercenter/Member_OrderDetail.html', {'goods': goods})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def address(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         addr = Address.objects.filter(userId=user.id)
         default = request.GET.get('default')
         del_id = request.GET.get('del')
@@ -52,14 +54,14 @@ def address(request):
         if del_id:
             Address.objects.filter(id=del_id).delete()
         return render(request, 'usercenter/Member_Address.html', {'addr': addr})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def addOrUpdate(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         id = request.GET.get('update')
         if request.method == 'POST' and request.POST.get('ok'):
             name = request.POST.get('name', None)
@@ -88,27 +90,27 @@ def addOrUpdate(request):
             else:
                 return render(request, 'usercenter/Member_AddOrUpdate.html', {'id': id, 'err': '请填写完整'})
         return render(request, 'usercenter/Member_AddOrUpdate.html', {'id': id})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def fav(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         fav = UserFav.objects.filter(userId=user.id)
         del_id = request.GET.get('del')
         if del_id:
             UserFav.objects.filter(id=del_id).delete()
         return render(request, 'usercenter/Member_Collect.html', {'fav': fav})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def editUser(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         if request.method == 'POST' and request.POST.get('ok'):
             nickname = request.POST.get('nickname', None)
             sex = request.POST.get('sex', None)
@@ -137,14 +139,14 @@ def editUser(request):
             else:
                 return render(request, 'usercenter/Member_Edit.html', {'user': user, 'err': '请填写完整'})
         return render(request, 'usercenter/Member_Edit.html', {'user': user})
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def safe(request):
     username = request.COOKIES.get('username')
-    user = UserProfile.objects.get(username=username)
-    if user:
+    try:
+        user = UserProfile.objects.get(username=username)
         if request.method == 'POST' and request.POST.get('ok'):
             old_email = request.POST.get('old_email')
             new_email = request.POST.get('new_email')
@@ -180,9 +182,58 @@ def safe(request):
             else:
                 return render(request, 'usercenter/Member_Safe.html', {'err': '请输入完整'})
         return render(request, 'usercenter/Member_Safe.html')
-    else:
+    except:
         return redirect(reverse('user:login'))
 
 
 def money(request):
-    return render(request, 'usercenter/Member_Money.html')
+    username = request.COOKIES.get('username')
+    try:
+        user = UserProfile.objects.get(username=username)
+        records = Record.objects.filter(userId=user.id)
+        return render(request, 'usercenter/Member_Money.html', {'records': records, 'user': user})
+    except:
+        return redirect(reverse('user:login'))
+
+
+def recharge(request):
+    username = request.COOKIES.get('username')
+    try:
+        user = UserProfile.objects.get(username=username)
+        if request.method == 'POST' and request.POST.get('ok'):
+            money = int(request.POST.get('money'))
+            note = request.POST.get('note')
+            pay = request.POST.get('pay')
+            if money and note and pay:
+                if money > 0:
+                    Record.objects.create(userId=user, money=money, note=note, pay=pay)
+                    user.money = user.money + money
+                    user.save()
+                    return redirect(reverse('usercenter:money'))
+                else:
+                    return render(request, 'usercenter/Member_Money_Charge.html', {'user': user, 'err': '请输入正确的金额'})
+            else:
+                return render(request, 'usercenter/Member_Money_Charge.html', {'user': user, 'err': '请填写完整'})
+        return render(request, 'usercenter/Member_Money_Charge.html', {'user': user})
+    except:
+        return redirect(reverse('user:login'))
+
+
+def search(request):
+    username = request.COOKIES.get('username')
+    try:
+        user = UserProfile.objects.get(username=username)
+        if request.method == 'POST':
+            try:
+                keyword = int(request.POST.get('keyword'))
+                try:
+                    order = Order.objects.get(number=keyword)
+                    goods = Order_detail.objects.filter(orderId=order.id)
+                    return render(request, 'usercenter/Member_OrderDetail.html', {'goods': goods})
+                except:
+                    return render(request, 'usercenter/Member_OrderDetail.html', {'err':'订单号不存在'})
+            except:
+                return render(request, 'usercenter/Member_OrderDetail.html', {'err': '请输入正确的订单号'})
+        return render(request, 'usercenter/Member_OrderDetail.html')
+    except:
+        return redirect(reverse('user:login'))

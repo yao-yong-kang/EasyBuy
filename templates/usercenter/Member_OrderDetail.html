@@ -151,11 +151,11 @@
 </div>
 <div class="m_top_bg">
     <div class="top">
-        <div class="m_logo"><a href="../goods/Index.html"><img src="../../static/images/logo1.png"/></a></div>
+        <div class="m_logo"><a href="{% url 'goods:index' %}"><img src="../../static/images/logo1.png"/></a></div>
         <div class="m_search">
-            <form>
-                <input type="text" value="" class="m_ipt"/>
-                <input type="submit" value="搜索" class="m_btn"/>
+            <form action="{% url 'usercenter:search' %}" method="post">
+                <input type="text" value="" class="m_ipt" name="keyword"/>
+                <input type="submit" value="搜索" class="m_btn" name="ok"/>
             </form>
             <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a
                     href="#">日用品</a><a href="#">连衣裙</a></span>
@@ -234,10 +234,11 @@
                     <tr>
                         <td width="20%">订单号</td>
                         <td width="15%">商品名</td>
-                        <td width="15%">购买数量</td>
-                        <td width="15%">单价</td>
+                        <td width="10%">购买数量</td>
+                        <td width="10%">单价</td>
                         <td width="15%">总价</td>
-                        <td width="25%">下单时间</td>
+                        <td width="20%">下单时间</td>
+                        <td width="20%">订单拥有者</td>
 
                     </tr>
                     {% for good in goods %}
@@ -248,10 +249,12 @@
                             <td>￥{{ good.productId.price }}</td>
                             <td>￥{{ good.cost }}</td>
                             <td>{{ good.orderId.createTime }}</td>
+                            <td>{{ good.orderId.userId.username }}</td>
                         </tr>
                     {% endfor %}
                 </table>
             </form>
+            <div style="color: red;text-align: center">{{ err }}</div>
         </div>
     </div>
     <!--End 用户中心 End-->

@@ -115,7 +115,7 @@
         <span class="fr">
             {% if username %}
 
-                <span class="fl">{{ username }}&nbsp;<a href="{% url 'user:login' %}">切换用户</a>&nbsp;<a href="{% url 'logout' %}">注销</a> <a href="{% url 'user:register' %}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+                <span class="fl">{{ username }}&nbsp;<a href="{% url 'user:login' %}">切换用户</a>&nbsp;<a href="{% url 'goods:logout' %}">注销</a> <a href="{% url 'user:register' %}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
 
             {% else %}
 
@@ -171,17 +171,17 @@
 <div class="top">
     <div class="logo"><a href="Index.html"><img src="../../static/images/logo.png" /></a></div>
     <div class="search">
-    	<form method="post" action="search/">
+    	<form method="post" action="{% url 'goods:search' %}">
         	<input type="text" value="" name="info" class="s_ipt" />
             <input type="submit" value="搜索" class="s_btn" />
         </form>                      
         <span class="fl">
-            <a href="{% url 'search' %}?info=坚果套餐">坚果套餐</a>
-            <a href="{% url 'search' %}?info=脑白金1号">脑白金1号</a>
-            <a href="{% url 'search' %}?info=香奈儿">香奈儿</a>
-            <a href="{% url 'search' %}?info=婴儿车">婴儿车</a>
-            <a href="{% url 'search' %}?info=电饭锅">电饭锅</a>
-            <a href="{% url 'search' %}?info=华为2566">华为2566</a>
+            <a href="{% url 'goods:search' %}?info=坚果套餐">坚果套餐</a>
+            <a href="{% url 'goods:search' %}?info=脑白金1号">脑白金1号</a>
+            <a href="{% url 'goods:search' %}?info=香奈儿">香奈儿</a>
+            <a href="{% url 'goods:search' %}?info=婴儿车">婴儿车</a>
+            <a href="{% url 'goods:search' %}?info=电饭锅">电饭锅</a>
+            <a href="{% url 'goods:search' %}?info=华为2566">华为2566</a>
         </span>
     </div>
     <div class="i_car">
@@ -597,7 +597,7 @@
                                         	<a href="#"><img src="../../static/images/{{ h1.img }}" width="160" height="136" /></a>
                                         </div>
                                         <div class="name">
-                                        	<a href="{% url 'product_detail' %}?id={{ h1.id }}">
+                                        	<a href="{% url 'goods:product_detail' %}?id={{ h1.id }}">
                                             <h2>{{ h1.name }}</h2>
 
                                             </a>
@@ -774,7 +774,7 @@
                     <div class="price">
                     	<font>￥<span>{{ g1.price }}</span></font> &nbsp; 26R
                     </div>
-                    <div class="img"><a href="{% url 'product_detail' %}?id={{ g1.id }}"><img src="../../static/images/{{ g1.img }}" width="185" height="155" /></a></div>
+                    <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ g1.id }}"><img src="../../static/images/{{ g1.img }}" width="185" height="155" /></a></div>
                 </li>
                 {% endfor %}
 {#                <li>#}
@@ -856,7 +856,7 @@
                     <div class="price">
                     	<font>￥<span>{{ g2.price }}</span></font> &nbsp; 25R
                     </div>
-                    <div class="img"><a href="{% url 'product_detail' %}?id={{ g2.id }}"><img src="../../static/images/{{ g2.img }}" width="185" height="155" /></a></div>
+                    <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ g2.id }}"><img src="../../static/images/{{ g2.img }}" width="185" height="155" /></a></div>
                 </li>
                 {% endfor %}
 {#                <li>#}
@@ -938,7 +938,7 @@
                     <div class="price">
                     	<font>￥<span>{{ g3.price }}</span></font> &nbsp; 16R
                     </div>
-                    <div class="img"><a href="{% url 'product_detail' %}?id={{ g3.id }}"><img src="../../static/images/{{ g3.img }}" width="185" height="155" /></a></div>
+                    <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ g3.id }}"><img src="../../static/images/{{ g3.img }}" width="185" height="155" /></a></div>
                 </li>
                 {% endfor %}
 {#                <li>#}
@@ -1436,12 +1436,12 @@
             <input type="submit" value="搜索" class="s_btn">
         </form>
         <span class="fl">
-            <a href="{% url 'search' %}?info=坚果套餐">坚果套餐</a>
-            <a href="{% url 'search' %}?info=脑白金1号">脑白金1号</a>
-            <a href="{% url 'search' %}?info=香奈儿">香奈儿</a>
-            <a href="{% url 'search' %}?info=婴儿车">婴儿车</a>
-            <a href="{% url 'search' %}?info=电饭锅">电饭锅</a>
-            <a href=""{% url 'search' %}?info=华为2566">华为2566</a>
+            <a href="{% url 'goods:searchnfo=坚果套餐">坚果套餐</a>
+            <a href="{% url 'goods:search' %}?info=脑白金1号">脑白金1号</a>
+            <a href="{% url 'goods:search' %}?info=香奈儿">香奈儿</a>
+            <a href="{% url 'goods:search' %}?info=婴儿车">婴儿车</a>
+            <a href="{% url 'goods:search' %}?info=电饭锅">电饭锅</a>
+            <a href=""{% url 'goods:search' %}?info=华为2566">华为2566</a>
         </span>
     </div>
     <div class="i_car">
