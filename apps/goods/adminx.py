@@ -13,7 +13,7 @@ class CategoryAdmin(object):
 
 
 class ProductAdmin(object):
-    list_display = ['name', 'description', 'price', 'stock', 'categoryL1Id', 'categoryL2Id', 'categoryL3Id', 'img',
+    list_display = ['name', 'description', 'price', 'sold', 'categoryL1Id', 'categoryL2Id', 'categoryL3Id', 'img',
                     'isDelete']
     search_fields = ['name']
     list_filter = ['name']

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect, reverse
 from django.db.models import Q
 from user.models import UserProfile, EmailVerify
 from django.views.generic.base import View
@@ -86,7 +86,7 @@ class LoginView(View):
                 if user.is_active == 0:
                     return HttpResponse("未激活")
                 else:
-                    index = render(request, 'goods/Index.html')
+                    index = redirect(reverse('index'))
                     index.set_cookie("username", username)
                     return index
 
