@@ -27,7 +27,7 @@ class EmailVerify(models.Model):
     code = models.CharField(max_length=20,verbose_name='验证码')
     email = models.EmailField(max_length=50,verbose_name='邮箱')
     send_type = models.CharField(default='注册', max_length=30)
-    send_time = models.DateTimeField(default=timezone.now())
+    send_time = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name = '邮箱验证码'
