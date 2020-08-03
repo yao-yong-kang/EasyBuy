@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'easy_buy',
         'USER': 'root',
-        'PASSWORD': '123123',
+        'PASSWORD': '010205',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
@@ -143,8 +143,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_HOST = "smtp.qq.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "918128078@qq.com"
-# 生成的授权码
+#邮箱名
 EMAIL_HOST_PASSWORD = "ojaycikepkcabchb"
-# 密码
-EMAIL_USE_TLS = True
+#密码
+EMAIL_USE_TLS= True
 EMAIL_FROM = "918128078@qq.com"
+#邮箱名
+
