@@ -22,11 +22,7 @@ class Product(models.Model):
     name = models.CharField(max_length=50, null=False, verbose_name='名称')
     description = models.CharField(max_length=1024, default='', verbose_name='描述')
     price = models.FloatField(null=False, verbose_name='价格')
-<<<<<<< HEAD
     sold = models.IntegerField(default=0, verbose_name='销量')
-=======
-    stock = models.IntegerField(null=False, verbose_name='销量')
->>>>>>> a8b6d6e83de07e265dcc622e6911acdc879012a0
     categoryL1Id = models.IntegerField(default='', verbose_name='分类一')
     categoryL2Id = models.IntegerField(default='', verbose_name='分类二')
     categoryL3Id = models.IntegerField(default='', verbose_name='分类三')
