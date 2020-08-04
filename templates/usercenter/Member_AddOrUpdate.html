@@ -115,7 +115,7 @@
         <!--End 所在收货地区 End-->
         <span class="fr">
             {% if user %}
-                <span class='fl'><a href="{% url 'usercenter:index' %}">{{ user.username }}</a></span>
+                <span class='fl'><a href="{% url 'usercenter:index' %}">{{ user.username }}</a> &nbsp;<a href="{% url 'goods:logout' %}">注销</a> &nbsp;|&nbsp;</span>
             {% else %}
                 <span class="fl">你好，请<a href="{% url 'user:login' %}">登录</a>&nbsp; <a href="{% url 'user:register' %}"
                                                                                       style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a
