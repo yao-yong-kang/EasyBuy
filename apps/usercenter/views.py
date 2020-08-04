@@ -191,7 +191,10 @@ def money(request):
     try:
         user = UserProfile.objects.get(username=username)
         records = Record.objects.filter(userId=user.id)
-        return render(request, 'usercenter/Member_Money.html', {'records': records, 'user': user})
+        if records:
+            return render(request, 'usercenter/Member_Money.html', {'records': records, 'user': user})
+        else:
+            return render(request, 'usercenter/Member_Money.html', {'records': records, 'user': user})
     except:
         return redirect(reverse('user:login'))
 

@@ -9,6 +9,7 @@ from django.db.models import Q
 
 from datetime import datetime
 
+
 # Create your views here.
 
 class IndexView(View):
@@ -64,15 +65,16 @@ class IndexView(View):
         else:
             return redirect(reverse('user:login'))
 
+
 class logout(View):
-    def get(self,request):
+    def get(self, request):
         a = redirect(reverse('user:login'))
         a.delete_cookie('username')
         return a
 
 
 class SearchView(View):
-    def get(self,request):
+    def get(self, request):
         info = request.GET.get('info')
         # 三级目录
         type1 = Category.objects.filter(category_type=1)
@@ -91,14 +93,25 @@ class SearchView(View):
             fil3 = Product.objects.filter(name__contains=info).order_by('-price')
             if fil1 or fil2 or fil3:
                 if type == '默认':
-                    return render(request, 'goods/Search.html', {'info': info, 'fil1': fil1, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
+                    return render(request, 'goods/Search.html',
+                                  {'info': info, 'fil1': fil1, 'carts': carts, 'num': num, 'total': total,
+                                   'type1': type1, 'type2': type2, 'type3': type3})
                 if type == '销量':
-                    return render(request, 'goods/Search.html', {'info': info, 'fil2': fil2, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
+                    return render(request, 'goods/Search.html',
+                                  {'info': info, 'fil2': fil2, 'carts': carts, 'num': num, 'total': total,
+                                   'type1': type1, 'type2': type2, 'type3': type3})
                 if type == '价格':
-                    return render(request, 'goods/Search.html', {'info': info, 'fil3': fil3, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
-            return render(request, 'goods/Search.html', {'info': info, 'fil1': fil1, 'alter': '没有找到相关的商品信息', 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
-        return render(request, 'goods/Search.html', {'alter': '请输入要搜索的内容', 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
-    def post(self,request):
+                    return render(request, 'goods/Search.html',
+                                  {'info': info, 'fil3': fil3, 'carts': carts, 'num': num, 'total': total,
+                                   'type1': type1, 'type2': type2, 'type3': type3})
+            return render(request, 'goods/Search.html',
+                          {'info': info, 'fil1': fil1, 'alter': '没有找到相关的商品信息', 'carts': carts, 'num': num,
+                           'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
+        return render(request, 'goods/Search.html',
+                      {'alter': '请输入要搜索的内容', 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2,
+                       'type3': type3})
+
+    def post(self, request):
         info = request.POST.get('info')
         # 三级目录
         type1 = Category.objects.filter(category_type=1)
@@ -106,11 +119,14 @@ class SearchView(View):
         type3 = Category.objects.filter(category_type=3)
         fil1 = Product.objects.filter(name__contains=info)
         if fil1:
-            return render(request, 'goods/Search.html', {'info': info, 'fil1': fil1, 'type1': type1, 'type2': type2, 'type3': type3})
-        return render(request, 'goods/Search.html', {'alter': '没有找到相关的商品信息', 'type1': type1, 'type2': type2, 'type3': type3})
+            return render(request, 'goods/Search.html',
+                          {'info': info, 'fil1': fil1, 'type1': type1, 'type2': type2, 'type3': type3})
+        return render(request, 'goods/Search.html',
+                      {'alter': '没有找到相关的商品信息', 'type1': type1, 'type2': type2, 'type3': type3})
+
 
 class KindView(View):
-    def get(self,request):
+    def get(self, request):
         kind = request.GET.get('kind')
         # 三级目录
         type1 = Category.objects.filter(category_type=1)
@@ -125,12 +141,17 @@ class KindView(View):
         if kind:
             cate = Category.objects.get(name=kind)
             kind_goods = Product.objects.filter(categoryL3Id=cate.id)
-            return render(request, 'goods/kind.html', {'kind': kind, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2,'type3': type3, 'kind_goods': kind_goods})
-        return render(request, 'goods/kind.html', {'kind': kind, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
+            return render(request, 'goods/kind.html',
+                          {'kind': kind, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2,
+                           'type3': type3, 'kind_goods': kind_goods})
+        return render(request, 'goods/kind.html',
+                      {'kind': kind, 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2,
+                       'type3': type3})
+
 
 class AddsView(View):
 
-    def get(self,request):
+    def get(self, request):
         username = request.COOKIES.get('username')
         if username:
             user_info = UserProfile.objects.get(username=username)
@@ -146,19 +167,24 @@ class AddsView(View):
                 return render(request, 'goods/Search.html', {'alter': '当前用户未激活'})
         return redirect(reverse('user:login'))
 
-def product_detail(request):
-    id = request.GET.get('id')
-    if id:
-        product = Product.objects.get(id=id)
-        user = request.user
-        cars = Car.objects.filter(userId=user.id)
-        if request.method== "POST":
-            if user:
-                num = request.POST.get('num', 1)
-                Car.objects.create(number= num,productId_id= id,userId_id=request.user.id)
-                return redirect(reverse('goodcar1'))
-            else:
-                return redirect(reverse('user:login'))
-        return render(request,"goods/ProductDetail.html",{'product' : product, 'user':user})
 
-    return redirect(reverse('goods:index'))
+def product_detail(request):
+    username = request.COOKIES.get('username')
+    if username:
+        user = UserProfile.objects.get(username=username)
+        cars = Car.objects.filter(userId=user.id)
+        id = request.GET.get('id')
+        if id:
+            product = Product.objects.get(id=id)
+            category = Category.objects.get(id=product.categoryL3Id)
+            if request.method == "POST":
+                if user:
+                    num = request.POST.get('num', 1)
+                    print(num)
+                    Car.objects.create(number=num, productId_id=id, userId_id=user.id)
+                    return redirect(reverse('goodcar1'))
+                else:
+                    return redirect(reverse('user:login'))
+            return render(request, "goods/ProductDetail.html", {'product': product, 'user': user, 'cars':cars, 'category':category})
+        return redirect(reverse('goods:index'))
+    return redirect(reverse('user:login'))
