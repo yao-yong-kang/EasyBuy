@@ -10,13 +10,13 @@ import xadmin
 
 
 urlpatterns = [
-
+    path('car/', include('car.urls')),
     path('xadmin/', xadmin.site.urls),
     path('captcha/', include('captcha.urls')),  # 生成验证码图片功能
-    path('user/',include('user.urls', namespace='user')),  # 用户
+    path('user/',include('user.urls',namespace='user')),  # 用户
     re_path('active/(?P<active_code>.*)/',ActiveUserView.as_view(),name='active'),  # 邮箱激活的路由
     path('usercenter/', include('usercenter.urls', namespace='member')),
-    path('', include('goods.urls')),
+    path('', include('goods.urls', namespace='goods')),
 
     url(r'^media/(?P<path>.*)$',  serve, {"document_root": MEDIA_ROOT}),  # 图片路径
 

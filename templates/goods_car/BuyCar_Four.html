@@ -15,8 +15,6 @@
                 
 	<script type="text/javascript" src="../../static/js/n_nav.js"></script>
     
-    <script type="text/javascript" src="../../static/js/select.js"></script>
-    
     <script type="text/javascript" src="../../static/js/num.js">
     	var jq = jQuery.noConflict();
     </script>     
@@ -458,132 +456,30 @@
 <!--End Menu End--> 
 <div class="i_bg">  
     <div class="content mar_20">
-        <a href="{% url 'goodcar1' %}"><img src="../../static/images/img2.jpg" /></a>
+    	<img src="../../static/images/img3.jpg" />
     </div>
-    
-    <!--Begin 第二步：确认订单信息 Begin -->
-    <div class="content mar_20">
-    	<div class="two_bg">
-        	<div class="two_t">
-            	<span class="fr"></span>商品列表
-            </div>
-            <table border="0" class="car_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
-              <tr>
-                <td class="car_th" width="550">商品名称</td>
-                <td class="car_th" width="140">单价</td>
-                <td class="car_th" width="150">购买数量</td>
-                <td class="car_th" width="130">小计</td>
-                <td class="car_th" width="140">返还积分</td>
-              </tr>
-                {% for i in product_list %}
+
+
+
+        
+        <!--Begin 余额不足 Begin -->
+    	<div class="warning">        	
+            <table border="0" style="width:1000px; text-align:center;" cellspacing="0" cellpadding="0">
               <tr>
                 <td>
-                    <div class="c_s_img"><img src="../../static/images/{{ i.productId.img }}" width="73" height="73" /></div>
-{#                    Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml#}
-                    {{ i.productId.name }}
-                </td>
-                <td align="center">{{ i.productId.price }}</td>
-                <td align="center">{{ i.number }}</td>
-                <td align="center" style="color:#ff4e00;">￥{%  widthratio i.number 1 i.productId.price %}</td>
-                <td align="center">{%  widthratio i.number 1 i.productId.price %}R</td>
-              </tr>
-                {% endfor %}
-                <tr>
-                <td colspan="5" align="right" style="font-family:'Microsoft YaHei';">
-                    商品总价：￥{{ total }}.00 ； 返还积分 {{ total }}R
+                	<p style="font-size:22px;">提示 !</p>
+                    <b style="color:#ff4e00; font-size:16px; font-family:'宋体';">您的余额不足以支付整个订单，请选择其他支付方式</b>
+                    <p style="color:#ff4e00; font-size:16px; font-family:'宋体';">您的余额为{{ money }} 不足以支付你的购物车{{ total }}</p>
+                	<div class="backs"><a href="{% url 'goodcar2' %}">返回上一页</a></div>
                 </td>
               </tr>
-            </table>
-            
-            <div class="two_t">
-            	<span class="fr"><a href="#">修改</a></span>收货人信息
-                {% if msg %}
-            <tr>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td width="500" height="300"><a href="{% url 'usercenter:order' %}"><font color="green">{{ msg }}</font></a></td>
-            </tr>
-        {% endif %}
-            </div>
-
-            <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
-              <tr>
-                <td class="p_td" width="160">商品名称</td>
-                <td width="395">{% for i in product_list %}
-                    {{ i.productId.name }}
-                {% endfor %}</td>
-                <td class="p_td" width="160">电子邮件</td>
-                <td width="395">{{ add.email }}</td>
-              </tr>
-              <tr>
-                <td class="p_td">详细信息</td>
-                <td>{{ add.address }}</td>
-                <td class="p_td">邮政编码</td>
-                <td>{{ add.code }}</td>
-              </tr>
-              <tr>
-                <td class="p_td">手机</td>
-                <td>{{ add.phone }}</td>
-                  <td class="p_td">标志建筑</td>
-                <td>{{ add.sign }}</td>
-              </tr>
-              <tr>
-              </tr>
-            </table>
-
-            
-            <div class="two_t">
-            	支付方式
-            </div>
-            <ul class="pay">
-                <li class="checked">余额支付<div class="ch_img"></div></li>
-{#                <li>银行亏款/转账<div class="ch_img"></div></li>#}
-{#                <li>货到付款<div class="ch_img"></div></li>#}
-{#                <li>支付宝<div class="ch_img"></div></li>#}
-            </ul>
-            
-
-            <form action="" method="post">
-                {% csrf_token %}
-            <table border="0" class="car_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
-              <tr>
-                <td class="car_th" width="80" height="30"></td>
-                <td class="car_th" width="490"></td>
-                <td class="car_th" width="180"></td>
-                <td class="car_th" width="180"></td>
-                <td class="car_th" width="180"></td>
-              </tr>
-              <tr>
-              	<td align="center"><input type="checkbox" name="city" /></td>
-                <td><b style="font-size:14px;">使用积分</b></td>
-                <td align="center">{{ user.score }}</td>
-              </tr>
-            </table>
-
-
-            <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
-              <tr>
-                <td align="right">
-                	该订单完成后，您将获得 <font color="#ff4e00">{{ total }}</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />
-                    商品总价: <font color="#ff4e00">￥{{ total }}</font>  + 配送费用: <font color="#ff4e00">￥15.00</font>
-                </td>
-              </tr>
-              <tr height="70">
-                <td align="right">
-                	<b style="font-size:14px;">应付款金额：<span style="font-size:22px; color:#ff4e00;">￥{{ total }}</span></b>
-                </td>
-              </tr>
-              <tr height="70">
-                <td align="right">
-{#                    <a href="{% url 'goodcar3' %}"> <img src="../../static/images/btn_sure.gif" />#}
-{#                    <input type="submit" value="使用积分" name="city">#}
-                    <a href="{% url 'goodcar3' %}"><input type="submit" value="确认支付"></a>
-{#                </a>#}
-                </td>
-              </tr>
-            </table>
-            </form>
+            </table>        	
         </div>
+        <!--Begin 余额不足 Begin -->
+        
+        
     </div>
-	<!--End 第二步：确认订单信息 End-->
+	<!--End 第三步：提交订单 End--> 
     
     
     <!--Begin Footer Begin -->

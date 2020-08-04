@@ -25,7 +25,7 @@ def myOrder(request):
         del_id = request.GET.get('id')
         if del_id:
             Order.objects.filter(id=del_id).delete()
-        return render(request, 'usercenter/Member_Order.html', {'orders': orders})
+        return render(request, 'usercenter/Member_Order.html', {'user': user, 'orders': orders})
     except:
         return redirect(reverse('user:login'))
 
@@ -36,7 +36,7 @@ def orderDetail(request):
         user = UserProfile.objects.get(username=username)
         id = request.GET.get('id')
         goods = Order_detail.objects.filter(orderId=id)
-        return render(request, 'usercenter/Member_OrderDetail.html', {'goods': goods})
+        return render(request, 'usercenter/Member_OrderDetail.html', {'user': user, 'goods': goods})
     except:
         return redirect(reverse('user:login'))
 
@@ -53,7 +53,7 @@ def address(request):
             Address.objects.filter(id=default).update(isDefault=True)
         if del_id:
             Address.objects.filter(id=del_id).delete()
-        return render(request, 'usercenter/Member_Address.html', {'addr': addr})
+        return render(request, 'usercenter/Member_Address.html', {'user': user, 'addr': addr})
     except:
         return redirect(reverse('user:login'))
 
@@ -88,8 +88,8 @@ def addOrUpdate(request):
                                                code=code)
                     return redirect(reverse('usercenter:address'))
             else:
-                return render(request, 'usercenter/Member_AddOrUpdate.html', {'id': id, 'err': '请填写完整'})
-        return render(request, 'usercenter/Member_AddOrUpdate.html', {'id': id})
+                return render(request, 'usercenter/Member_AddOrUpdate.html', {'user': user, 'id': id, 'err': '请填写完整'})
+        return render(request, 'usercenter/Member_AddOrUpdate.html', {'user': user, 'id': id})
     except:
         return redirect(reverse('user:login'))
 
@@ -102,7 +102,7 @@ def fav(request):
         del_id = request.GET.get('del')
         if del_id:
             UserFav.objects.filter(id=del_id).delete()
-        return render(request, 'usercenter/Member_Collect.html', {'fav': fav})
+        return render(request, 'usercenter/Member_Collect.html', {'user': user, 'fav': fav})
     except:
         return redirect(reverse('user:login'))
 
@@ -157,11 +157,11 @@ def safe(request):
                         user.save()
                         return redirect(reverse('usercenter:index'))
                     else:
-                        return render(request, 'usercenter/Member_Safe.html', {'err': '新邮箱不能与旧邮箱相同'})
+                        return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '新邮箱不能与旧邮箱相同'})
                 else:
-                    return render(request, 'usercenter/Member_Safe.html', {'err': '原邮箱输入错误'})
+                    return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '原邮箱输入错误'})
             else:
-                return render(request, 'usercenter/Member_Safe.html', {'err': '请输入完整'})
+                return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '请输入完整'})
         elif request.method == 'POST' and request.POST.get('ok1'):
             old_psd = request.POST.get('old_psd')
             psd = request.POST.get('new_psd')
@@ -174,14 +174,14 @@ def safe(request):
                             user.save()
                             return redirect(reverse('user:login'))
                         else:
-                            return render(request, 'usercenter/Member_Safe.html', {'err': '新密码输入不一致'})
+                            return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '新密码输入不一致'})
                     else:
-                        return render(request, 'usercenter/Member_Safe.html', {'err': '新密码不能与旧密码相同'})
+                        return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '新密码不能与旧密码相同'})
                 else:
-                    return render(request, 'usercenter/Member_Safe.html', {'err': '旧密码输入错误'})
+                    return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '旧密码输入错误'})
             else:
-                return render(request, 'usercenter/Member_Safe.html', {'err': '请输入完整'})
-        return render(request, 'usercenter/Member_Safe.html')
+                return render(request, 'usercenter/Member_Safe.html', {'user': user, 'err': '请输入完整'})
+        return render(request, 'usercenter/Member_Safe.html', {'user': user})
     except:
         return redirect(reverse('user:login'))
 
@@ -229,11 +229,11 @@ def search(request):
                 try:
                     order = Order.objects.get(number=keyword)
                     goods = Order_detail.objects.filter(orderId=order.id)
-                    return render(request, 'usercenter/Member_OrderDetail.html', {'goods': goods})
+                    return render(request, 'usercenter/Member_OrderDetail.html', {'user': user, 'goods': goods})
                 except:
-                    return render(request, 'usercenter/Member_OrderDetail.html', {'err':'订单号不存在'})
+                    return render(request, 'usercenter/Member_OrderDetail.html', {'user': user, 'err':'订单号不存在'})
             except:
-                return render(request, 'usercenter/Member_OrderDetail.html', {'err': '请输入正确的订单号'})
-        return render(request, 'usercenter/Member_OrderDetail.html')
+                return render(request, 'usercenter/Member_OrderDetail.html', {'user': user, 'err': '请输入正确的订单号'})
+        return render(request, 'usercenter/Member_OrderDetail.html', {'user': user})
     except:
         return redirect(reverse('user:login'))

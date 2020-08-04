@@ -4,7 +4,8 @@ from user.models import UserProfile, EmailVerify
 from django.views.generic.base import View
 from .forms import RegisterForm
 from django.contrib.auth.hashers import make_password, check_password
-from utils.send_email import send_register_email
+from apps.utils.send_email import send_register_email
+from apps.utils.send_email import send_register_email
 from datetime import datetime
 
 
