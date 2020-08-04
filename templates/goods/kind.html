@@ -101,8 +101,16 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-        	<span class="fl">你好，请<a href="../users/Login.html">登录</a>&nbsp; <a href="../users/Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
-        	<span class="ss">
+        	{% if username %}
+
+                <span class="fl">{{ username }}&nbsp;<a href="{% url 'user:login' %}">切换用户</a>&nbsp;<a href="{% url 'goods:logout' %}">注销</a> &nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+
+            {% else %}
+
+                <span class="fl">你好，请<a href="{% url 'user:login' %}">登录</a>&nbsp; <a href="{% url 'user:register' %}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+
+            {% endif %}
+            <span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
                     <div class="ss_list_bg">
@@ -631,7 +639,13 @@
                             </div>
                             <div class="name"><a href="{% url 'goods:product_detail' %}?id={{ k1.id }}">{{ k1.name }}</a></div>
                             <div class="carbg">
-{#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ k1.id }}" class="ss">收藏</a>#}
+                                {% if k1.id in li %}
+
+                                {% else %}
+
+                                    <a href="{% url 'goods:adds' %}?id={{ k1.id }}" class="ss">收藏</a>
+
+                                {% endif %}
                                 <a href="#" class="j_car">加入购物车</a>
                             </div>
                         </li>

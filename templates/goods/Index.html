@@ -115,7 +115,7 @@
         <span class="fr">
             {% if username %}
 
-                <span class="fl">{{ username }}&nbsp;<a href="{% url 'user:login' %}">切换用户</a>&nbsp;<a href="{% url 'goods:logout' %}">注销</a> &nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+                <span class="fl">{{ username }}&nbsp;<a href="{% url 'user:login' %}">切换用户</a>&nbsp;<a href="{% url 'goods:logout' %}">注销</a> <a href="{% url 'user:register' %}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
 
             {% else %}
 
