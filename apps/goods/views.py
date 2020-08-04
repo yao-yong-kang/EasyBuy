@@ -178,6 +178,7 @@ def product_detail(request):
             if request.method == "POST":
                 if user:
                     num = request.POST.get('num', 1)
+                    print(num)
                     Car.objects.create(number=num, productId_id=id, userId_id=user.id)
                     return redirect(reverse('goodcar1'))
                 else:
