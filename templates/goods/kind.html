@@ -225,7 +225,7 @@
 
                                     {% if t2.id == t3.parent_category_id %}
 
-                                    <a href="#">{{ t3.name }}</a>|  {# <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">巧克力</a>|#}
+                                    <a href="{% url 'goods:kind' %}?kind={{ t3.name }}">{{ t3.name }}</a>|  {# <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">巧克力</a>|#}
                                     {% endif %}
                                     {% endfor %}
 {#                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|#}
@@ -515,7 +515,7 @@
     	<ul class="menu_r">                                                                                                                                               
         	<li><a href="{% url 'goods:index' %}">首页</a></li>
             <li><a href="{% url 'goods:kind' %}?kind=少女派">少女派</a></li>
-            <li><a href="{% url 'goods:kind' %}?kind=碗筷">碗筷</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=蜜饯">蜜饯</a></li>
             <li><a href="{% url 'goods:kind' %}?kind=坚果">坚果</a></li>
             <li><a href="{% url 'goods:kind' %}?kind=联想电脑">联想电脑</a></li>
             <li><a href="{% url 'goods:kind' %}?kind=脑白金">脑白金</a></li>
@@ -528,7 +528,7 @@
 	<div class="postion">
 <!--    	<span class="fl">全部 > 美妆个护 > 香水 > </span>-->
         <span class="n_ch">
-            <span class="fl">品牌：<font>{{ info }}</font></span>
+            <span class="fl">种类：<font>{{ kind }}</font></span>
             <a href="#"><img src="../../static/images/s_close.gif" /></a>
         </span>
     </div>
@@ -602,17 +602,17 @@
         <div class="l_list">
         	<div class="list_t">
             	<span class="fl list_or">
-                	<a href="{% url 'goods:search' %}?info={{ info }}&type=默认">默认</a>
-                    <a href="{% url 'goods:search' %}?info={{ info }}&type=销量">
-                    	<span class="fl">销量</span>                        
-                        <span class="i_up">销量从低到高显示</span>
-                        <span class="i_down">销量从高到低显示</span>                                                     
-                    </a>
-                    <a href="{% url 'goods:search' %}?info={{ info }}&type=价格">
-                    	<span class="fl">价格</span>                        
-                        <span class="i_up">价格从低到高显示</span>
-                        <span class="i_down">价格从高到低显示</span>     
-                    </a>
+{#                	<a href="{% url 'goods:search' %}?info={{ info }}&type=默认">默认</a>#}
+{#                    <a href="{% url 'goods:search' %}?info={{ info }}&type=销量">#}
+{#                    	<span class="fl">销量</span>                        #}
+{#                        <span class="i_up">销量从低到高显示</span>#}
+{#                        <span class="i_down">销量从高到低显示</span>                                                     #}
+{#                    </a>#}
+{#                    <a href="{% url 'goods:search' %}?info={{ info }}&type=价格">#}
+{#                    	<span class="fl">价格</span>                        #}
+{#                        <span class="i_up">价格从低到高显示</span>#}
+{#                        <span class="i_down">价格从高到低显示</span>     #}
+{#                    </a>#}
 {#                    <a href="#">新品</a>#}
                 </span>
                 <span class="fr">共发现120件</span>
@@ -621,56 +621,23 @@
             	
                 <ul class="cate_list">
                     <h2>{{ alter }}</h2>
-                    {% if fil1 %}
 
-                        {% for f1 in fil1 %}
+                        {% for k1 in kind_goods %}
 
                         <li>
-                            <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ f1.id }}"><img src="../../static/images/{{ f1.img }}" width="210" height="185" /></a></div>
+                            <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ k1.id }}"><img src="../../static/images/{{ k1.img }}" width="210" height="185" /></a></div>
                             <div class="price">
-                                <font>￥<span>{{ f1.price }}</span></font> &nbsp; 26R
+                                <font>￥<span>{{ k1.price }}</span></font> &nbsp; 26R
                             </div>
-                            <div class="name"><a href="{% url 'goods:product_detail' %}?id={{ f1.id }}">{{ f1.name }}</a></div>
+                            <div class="name"><a href="{% url 'goods:product_detail' %}?id={{ k1.id }}">{{ k1.name }}</a></div>
                             <div class="carbg">
-{#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ f1.id }}" class="ss">收藏</a>#}
+{#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ k1.id }}" class="ss">收藏</a>#}
                                 <a href="#" class="j_car">加入购物车</a>
                             </div>
                         </li>
                         {% endfor %}
 
-                    {% elif fil2 %}
-                        {% for f2 in fil2 %}
 
-                        <li>
-                            <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ f2.id }}"><img src="../../static/images/{{ f2.img }}" width="210" height="185" /></a></div>
-                            <div class="price">
-                                <font>￥<span>{{ f2.price }}</span></font> &nbsp; 26R
-                            </div>
-                            <div class="name"><a href="{% url 'goods:product_detail' %}?id={{ f2.id }}">{{ f2.name }}</a></div>
-                            <div class="carbg">
-{#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ f1.id }}" class="ss">收藏</a>#}
-                                <a href="#" class="j_car">加入购物车</a>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    {% else %}
-
-                        {% for f3 in fil3 %}
-
-                        <li>
-                            <div class="img"><a href="{% url 'goods:product_detail' %}?id={{ f3.id }}"><img src="../../static/images/{{ f3.img }}" width="210" height="185" /></a></div>
-                            <div class="price">
-                                <font>￥<span>{{ f3.price }}</span></font> &nbsp; 26R
-                            </div>
-                            <div class="name"><a href="{% url 'goods:product_detail' %}?id={{ f3.id }}">{{ f3.name }}</a></div>
-                            <div class="carbg">
-{#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ f1.id }}" class="ss">收藏</a>#}
-                                <a href="#" class="j_car">加入购物车</a>
-                            </div>
-                        </li>
-                        {% endfor %}
-
-                    {% endif %}
 
 {#                    <li>#}
 {#                    	<div class="img"><a href="#"><img src="../../static/images/per_2.jpg" width="210" height="185" /></a></div>#}
