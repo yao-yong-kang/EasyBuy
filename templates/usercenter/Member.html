@@ -101,9 +101,14 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-        	<span class="fl">你好，请<a href="../users/Login.html">登录</a>&nbsp; <a href="../users/Regist.html"
+            {% if user %}
+                <span class='fl'><a href="{% url 'usercenter:index' %}">{{ user.username }}</a></span>
+            {% else %}
+                <span class="fl">你好，请<a href="{% url 'user:login' %}">登录</a>&nbsp; <a href="{% url 'user:register' %}"
                                                                                style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a
-                    href="#">我的订单</a>&nbsp;|</span>
+                    href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+            {% endif %}
+
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -154,7 +159,7 @@
         <div class="m_logo"><a href="{% url 'goods:index' %}"><img src="../../static/images/logo1.png"/></a></div>
         <div class="m_search">
             <form action="{% url 'usercenter:search' %}" method="post">
-                <input type="text" value="" class="m_ipt" name="keyword"/>
+                <input type="text" value="" class="m_ipt" name="keyword" placeholder="请输入订单号"/>
                 <input type="submit" value="搜索" class="m_btn" name="ok"/>
             </form>
             <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a
@@ -164,7 +169,8 @@
             <div class="car_t">购物车 [ <span>3</span> ]</div>
             <div class="car_bg">
                 <!--Begin 购物车未登录 Begin-->
-                <div class="un_login">还未登录！<a href="../users/Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+                <div class="un_login"><a href="{% url 'usercenter:index' %}" style="color:#ff4e00;">{{ user.username }}</a> <a
+                        href="">查看购物车！</a></div>
                 <!--End 购物车未登录 End-->
                 <!--Begin 购物车已登录 Begin-->
                 <ul class="cars">
@@ -172,18 +178,6 @@
                         <div class="img"><a href="#"><img src="../../static/images/car1.jpg" width="58"
                                                           height="58"/></a></div>
                         <div class="name"><a href="#">法颂浪漫梦境50ML 香水女士持久清新淡香 送2ML小样3只</a></div>
-                        <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                    </li>
-                    <li>
-                        <div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58"
-                                                          height="58"/></a></div>
-                        <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-                        <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                    </li>
-                    <li>
-                        <div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58"
-                                                          height="58"/></a></div>
-                        <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
                         <div class="price"><font color="#ff4e00">￥399</font> X1</div>
                     </li>
                 </ul>

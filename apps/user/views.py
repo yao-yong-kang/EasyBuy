@@ -86,7 +86,7 @@ class LoginView(View):
                 if user.is_active == 0:
                     return HttpResponse("未激活")
                 else:
-                    index = redirect(reverse('index'))
+                    index = redirect(reverse('goods:index'))
                     index.set_cookie("username", username)
                     user.last_login = datetime.now()
                     user.save()
