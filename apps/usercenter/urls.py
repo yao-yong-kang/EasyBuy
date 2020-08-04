@@ -3,7 +3,6 @@ from . import views
 
 app_name = 'usercenter'
 
-
 urlpatterns = [
     path('index/', views.memberIndex, name='index'),
     path('order/', views.myOrder, name='order'),
@@ -14,4 +13,6 @@ urlpatterns = [
     path('editUser/', views.editUser, name='editUser'),
     path('safe/', views.safe, name='safe'),
     path('money/', views.money, name='money'),
+    path('recharge/', views.recharge, name='recharge'),
+    path('search/', views.search, name='search'),
 ]

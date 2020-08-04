@@ -10,7 +10,7 @@ class UserProfile(AbstractUser):
     mobile = models.CharField(max_length=11, unique=True, verbose_name='手机号')
     time = models.DateTimeField(auto_now_add=True, verbose_name='登录时间')
     score = models.IntegerField(default=0, verbose_name='积分')  # 100scroe=1￥
-    money = models.IntegerField(default=0, verbose_name='余额')
+    money = models.FloatField(default=0, verbose_name='余额')
     cost = models.IntegerField(default=0, verbose_name='总消费')
     photo = models.ImageField(upload_to='img/%Y/%m', default='default.jpg', verbose_name='头像')
 
@@ -31,6 +31,18 @@ class EmailVerify(models.Model):
 
     class Meta:
         verbose_name = '邮箱验证码'
+        verbose_name_plural = verbose_name
+
+
+class Record(models.Model):
+    userId = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户id')
+    money = models.FloatField(verbose_name='余额')
+    note = models.CharField(max_length=255, verbose_name='备注')
+    pay = models.CharField(max_length=255, verbose_name='支付方式')
+    time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+
+    class Meta:
+        verbose_name = '充值记录'
         verbose_name_plural = verbose_name
 
 
