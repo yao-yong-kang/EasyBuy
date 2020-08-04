@@ -5,6 +5,8 @@ from django.views.generic.base import View
 from .forms import RegisterForm
 from django.contrib.auth.hashers import make_password, check_password
 from apps.utils.send_email import send_register_email
+from apps.utils.send_email import send_register_email
+from datetime import datetime
 
 
 # 注册
@@ -77,21 +79,21 @@ class LoginView(View):
             return render(request, 'users/Login.html', {'errmsg': '数据不完整'})
         # user = authenticate(username=username, password=password)
         # user = UserProfile.objects.filter(username=username,password=password)
-        user = UserProfile.objects.get(username=username)
 
-        if user:
+        try:
+            user = UserProfile.objects.get(username=username)
             a = check_password(password, user.password)
-            print(a)
             if a:
                 if user.is_active == 0:
                     return HttpResponse("未激活")
                 else:
-                    index = redirect(reverse('index'))
+                    index = redirect(reverse('goods:index'))
                     index.set_cookie("username", username)
+                    user.last_login = datetime.now()
+                    user.save()
                     return index
 
             else:
                 return render(request, 'users/Login.html', {'errmsg': '密码输入错误'})
-        else:
-
+        except:
             return render(request, 'users/Login.html', {'errmsg': '用户名不存在'})

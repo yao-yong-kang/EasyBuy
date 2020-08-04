@@ -101,9 +101,13 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-        	<span class="fl">你好，请<a href="../users/Login.html">登录</a>&nbsp; <a href="../users/Regist.html"
+            {% if user %}
+                <span class='fl'><a href="{% url 'usercenter:index' %}">{{ user.username }}</a></span>
+            {% else %}
+                <span class="fl">你好，请<a href="{% url 'user:login' %}">登录</a>&nbsp; <a href="{% url 'user:register' %}"
                                                                                style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a
-                    href="#">我的订单</a>&nbsp;|</span>
+                    href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
+            {% endif %}
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -151,11 +155,11 @@
 </div>
 <div class="m_top_bg">
     <div class="top">
-        <div class="m_logo"><a href="../goods/Index.html"><img src="../../static/images/logo1.png"/></a></div>
+        <div class="m_logo"><a href="{% url 'goods:index' %}"><img src="../../static/images/logo1.png"/></a></div>
         <div class="m_search">
-            <form>
-                <input type="text" value="" class="m_ipt"/>
-                <input type="submit" value="搜索" class="m_btn"/>
+            <form action="{% url 'usercenter:search' %}" method="post">
+                <input type="text" value="" class="m_ipt" name="keyword" placeholder="请输入订单号"/>
+                <input type="submit" value="搜索" class="m_btn" name="ok"/>
             </form>
             <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a
                     href="#">日用品</a><a href="#">连衣裙</a></span>
@@ -237,15 +241,24 @@
                         <td width="15%">订单总金额</td>
                         <td width="15%">操作</td>
                     </tr>
-                    {% for order in orders %}
+                    {% if orders %}
+                        {% for order in orders %}
+                            <tr>
+                                <td><a href="{% url 'usercenter:detail' %}?id={{ order.id }}"><font
+                                        color="#ff4e00">{{ order.number }}</font></a></td>
+                                <td>{{ order.createTime }}</td>
+                                <td>￥{{ order.cost }}</td>
+                                <td><a href="{% url 'usercenter:order' %}?id={{ order.id }}">删除订单</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td><a href="{% url 'usercenter:detail' %}?id={{ order.id }}"><font
-                                    color="#ff4e00">{{ order.number }}</font></a></td>
-                            <td>{{ order.createTime }}</td>
-                            <td>￥{{ order.cost }}</td>
-                            <td><a href="{% url 'usercenter:order' %}?id={{ order.id }}">取消订单</a></td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                 </table>
             </form>
         </div>
