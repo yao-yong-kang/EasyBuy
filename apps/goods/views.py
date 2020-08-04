@@ -149,7 +149,6 @@ class AddsView(View):
             user_info = UserProfile.objects.get(username=username)
             id = request.GET.get('id')
             product = Product.objects.get(id=id)
-
             userfav = UserFav()
             userfav.productId = product
             userfav.userId = user_info
