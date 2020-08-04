@@ -2,7 +2,6 @@ from datetime import datetime
 
 from django.shortcuts import render, redirect, reverse
 from user.models import UserProfile, Record
-from car.models import Car
 from usercenter.models import Address, Order, Order_detail, UserFav
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -13,8 +12,7 @@ def memberIndex(request):
     try:
         user = UserProfile.objects.get(username=username)
         user = UserProfile.objects.get(id=user.id)
-        cars = Car.objects.filter(userId=user.id)
-        return render(request, 'usercenter/Member.html', {'user': user, 'cars':cars})
+        return render(request, 'usercenter/Member.html', {'user': user})
     except:
         return redirect(reverse('user:login'))
 
