@@ -256,7 +256,7 @@
 
                                     {% if t2.id == t3.parent_category_id %}
 
-                                    <a href="#">{{ t3.name }}</a>|  {# <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">巧克力</a>|#}
+                                    <a href="{% url 'goods:kind' %}?kind={{ t3.name }}">{{ t3.name }}</a>|  {# <a href="#">蜜饯</a>|<a href="#">红枣</a>|<a href="#">牛肉干</a>|<a href="#">巧克力</a>|#}
                                     {% endif %}
                                     {% endfor %}
 {#                                    <a href="#">口香糖</a>|<a href="#">海苔</a>|<a href="#">鱼干</a>|<a href="#">蜜饯</a>|<a href="#">红枣</a>|#}
@@ -494,14 +494,12 @@
         </div>  
         <!--End 商品分类详情 End-->                                                     
     	<ul class="menu_r">                                                                                                                                               
-        	<li><a href="Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
+        	<li><a href="{% url 'goods:index' %}">首页</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=少女派">少女派</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=蜜饯">蜜饯</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=坚果">坚果</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=联想电脑">联想电脑</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=脑白金">脑白金</a></li>
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
@@ -594,7 +592,7 @@
                                     <div class="box">
                                     	<div class="h_icon"><img src="../../static/images/hot.png" width="50" height="50" /></div>
                                         <div class="imgbg">
-                                        	<a href="#"><img src="../../static/images/{{ h1.img }}" width="160" height="136" /></a>
+                                        	<a href="{% url 'goods:product_detail' %}?id={{ h1.id }}"><img src="../../static/images/{{ h1.img }}" width="160" height="136" /></a>
                                         </div>
                                         <div class="name">
                                         	<a href="{% url 'goods:product_detail' %}?id={{ h1.id }}">
