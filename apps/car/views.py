@@ -38,6 +38,7 @@ def car2(request):
     user = UserProfile.objects.get(id=1)  # 获取当前用户
     add = Address.objects.filter(isDefault='1', id=user.id)  # 获取当前用户的默认地址
     total = 0  # 消费
+    list.append(total)
     try:
         add = Address.objects.get(isDefault=1)  # 默认地址
     except:
@@ -48,6 +49,7 @@ def car2(request):
         print(total)
         list.append(total)
         if request.method == 'POST':
+            list.append(total)
             if request.POST.get('city'):  # 使用积分
                 city=request.POST.get('city')
                 print('city是',city)
@@ -145,8 +147,7 @@ def car4(request):  # 不使用积分
         order.save()  # 添加订单
     else:
         return render(request, 'goods_car/BuyCar_Two.html',
-                      {'total': list[-1], "msg": "您还没有收货地址",
-                       'product_list': product_list, "user": user, 'add': add})
+                      {'total': list[-1], "msg": "您还没有收货地址",'product_list': product_list, "user": user, 'add': add})
     for i in product_list:
         quantity = i.number * i.productId.price
         o = Order_detail()
@@ -159,8 +160,7 @@ def car4(request):  # 不使用积分
     order1 = Order.objects.filter(userId_id=1).last()  # 当前用户的所有订单
     order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
     return render(request, 'goods_car/BuyCar_Three.html',
-                  {'user':user,'order': order1, 'order_detail': order_detail1,
-                   'product_list':product_list,'count':count,'list': list[-1],'money':money1})
+                  {'user':user,'order': order1, 'order_detail': order_detail1,'product_list':product_list,'count':count,'list': list[-1],'money':money1})
 
 
 def car5(request):

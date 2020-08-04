@@ -105,7 +105,7 @@ class SearchView(View):
                                   {'info': info, 'fil3': fil3, 'carts': carts, 'num': num, 'total': total,
                                    'type1': type1, 'type2': type2, 'type3': type3})
             return render(request, 'goods/Search.html',
-                          {'info': info, 'fil1': fil1, 'alter': '没有找到相关的商品信息', 'carts': carts, 'num': num,
+                          {'info': info, 'fil1': fil1, 'carts': carts, 'num': num,
                            'total': total, 'type1': type1, 'type2': type2, 'type3': type3})
         return render(request, 'goods/Search.html',
                       {'alter': '请输入要搜索的内容', 'carts': carts, 'num': num, 'total': total, 'type1': type1, 'type2': type2,
