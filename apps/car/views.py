@@ -111,7 +111,8 @@ def car3(request):
         order1 = Order.objects.filter(userId_id=1).last()  # 当前用户的所有订单
         order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
         return render(request, 'goods_car/BuyCar_Three.html',
-                      {'order': order1, 'order_detail': order_detail1, 'list': list[-1],'money':money1})
+                      {'user':user,'order': order1, 'order_detail': order_detail1,
+                       'product_list':product_list,'count':count,'list': list[-1],'money':money1})
 
 
 def car4(request):  # 不使用积分
@@ -158,7 +159,8 @@ def car4(request):  # 不使用积分
     order1 = Order.objects.filter(userId_id=1).last()  # 当前用户的所有订单
     order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
     return render(request, 'goods_car/BuyCar_Three.html',
-                  {'order': order1, 'order_detail': order_detail1, 'list': list[-1],'money':money1})
+                  {'user':user,'order': order1, 'order_detail': order_detail1,
+                   'product_list':product_list,'count':count,'list': list[-1],'money':money1})
 
 
 def car5(request):
@@ -167,4 +169,5 @@ def car5(request):
     product_list = Car.objects.all()  # 购物车商品
     count = Car.objects.all().count()  # 购物车商品总数量
     money=user.money
-    return render(request, 'goods_car/BuyCar_Four.html',{"money":money,"product_list":product_list,"count":count,"total":list[-1]})
+    return render(request, 'goods_car/BuyCar_Four.html',{'user':user,"money":money,
+                                                         "product_list":product_list,"count":count,"total":list[-1]})

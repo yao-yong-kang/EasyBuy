@@ -21,7 +21,7 @@
     
     <script type="text/javascript" src="../../static/js/shade.js"></script>
     
-<title>尤洪</title>
+<title>查看购物车</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -105,7 +105,7 @@
         <!--End 所在收货地区 End-->
         <span class="fr">
             {% if username %}
-                <span class="fl">你好，<a href="../users/Login.html">{{ username }}</a>&nbsp; &nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+                <span class="fl">你好，<a href="../users/Login.html">{{ username }}</a>&nbsp; &nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
             {% endif %}
         	<span class="ss">
             	<div class="ss_list">
@@ -121,16 +121,16 @@
                     </div>     
                 </div>
                 <div class="ss_list">
-                	<a href="#">客户服务</a>
+                	<a href="{% url 'usercenter:money' %}">资金管理</a>
                     <div class="ss_list_bg">
                     	<div class="s_city_t"></div>
-                        <div class="ss_list_c">
-                        	<ul>
-                            	<li><a href="#">客户服务</a></li>
-                                <li><a href="#">客户服务</a></li>
-                                <li><a href="#">客户服务</a></li>
-                            </ul>
-                        </div>
+{#                        <div class="ss_list_c">#}
+{#                        	<ul>#}
+{#                            	<li><a href="#">客户服务</a></li>#}
+{#                                <li><a href="#">客户服务</a></li>#}
+{#                                <li><a href="#">客户服务</a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
                     </div>    
                 </div>
                 <div class="ss_list">
@@ -434,14 +434,12 @@
         </div>  
         <!--End 商品分类详情 End-->                                                     
     	<ul class="menu_r">                                                                                                                                               
-        	<li><a href="../goods/Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
+            <li><a href="{% url 'goods:index' %}">首页</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=少女派">少女派</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=蜜饯">蜜饯</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=坚果">坚果</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=联想电脑">联想电脑</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=脑白金">脑白金</a></li>
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
@@ -571,9 +569,9 @@
         </dl>
         <dl>
         	<dt><a href="#">会员中心</a></dt>
-            <dd><a href="#">资金管理</a></dd>
+            <dd><a href="{% url 'usercenter:money' %}">资金管理</a></dd>
             <dd><a href="#">我的收藏</a></dd>
-            <dd><a href="#">我的订单</a></dd>
+            <dd><a href="{% url 'usercenter:order' %}">我的订单</a></dd>
         </dl>
         <dl>
         	<dt><a href="#">服务保证</a></dt>
