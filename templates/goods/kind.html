@@ -661,7 +661,13 @@
                             <div class="name"><a
                                     href="{% url 'goods:product_detail' %}?id={{ k1.id }}">{{ k1.name }}</a></div>
                             <div class="carbg">
-                                {#                                <a href="{% url 'goods:search' %}?info={{ info }}&id={{ k1.id }}" class="ss">收藏</a>#}
+                                {% if k1.id in li %}
+
+                                {% else %}
+
+                                    <a href="{% url 'goods:adds' %}?id={{ f1.id }}" class="ss">收藏</a>
+
+                                {% endif %}
                                 <a href="#" class="j_car">加入购物车</a>
                             </div>
                         </li>
