@@ -441,14 +441,12 @@
         </div>  
         <!--End 商品分类详情 End-->                                                     
     	<ul class="menu_r">                                                                                                                                               
-        	<li><a href="../goods/Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
+            <li><a href="{% url 'goods:index' %}">首页</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=少女派">少女派</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=蜜饯">蜜饯</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=坚果">坚果</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=联想电脑">联想电脑</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=脑白金">脑白金</a></li>
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
