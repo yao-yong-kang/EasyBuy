@@ -21,7 +21,7 @@
     
     <script type="text/javascript" src="../../static/js/shade.js"></script>
     
-<title>尤洪</title>
+<title>订单提交成功</title>
 </head>
 <body>  
 <!--Begin Header Begin-->
@@ -104,7 +104,7 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-        	<span class="fl">你好，请<a href="../users/Login.html">登录</a>&nbsp; <a href="../users/Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+        	<span class="fl">你好，<a href="../users/Login.html">{{ user.username }}</a>&nbsp; <a href="../users/Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{% url 'usercenter:order' %}">我的订单</a>&nbsp;|</span>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -119,16 +119,16 @@
                     </div>     
                 </div>
                 <div class="ss_list">
-                	<a href="#">客户服务</a>
+                	<a href="#">资金管理</a>
                     <div class="ss_list_bg">
                     	<div class="s_city_t"></div>
-                        <div class="ss_list_c">
-                        	<ul>
-                            	<li><a href="#">客户服务</a></li>
-                                <li><a href="#">客户服务</a></li>
-                                <li><a href="#">客户服务</a></li>
-                            </ul>
-                        </div>
+{#                        <div class="ss_list_c">#}
+{#                        	<ul>#}
+{#                            	<li><a href="#">客户服务</a></li>#}
+{#                                <li><a href="#">客户服务</a></li>#}
+{#                                <li><a href="#">客户服务</a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
                     </div>    
                 </div>
                 <div class="ss_list">
@@ -160,31 +160,33 @@
         <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
     </div>
     <div class="i_car">
-    	<div class="car_t">购物车 [ <span>3</span> ]</div>
+    	<div class="car_t">购物车 [ <span>{{ count }}</span> ]</div>
         <div class="car_bg">
        		<!--Begin 购物车未登录 Begin-->
-        	<div class="un_login">还未登录！<a href="../users/Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+{#        	<div class="un_login">还未登录！<a href="../users/Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>#}
             <!--End 购物车未登录 End-->
             <!--Begin 购物车已登录 Begin-->
             <ul class="cars">
+                {% for i in product_list %}
             	<li>
-                	<div class="img"><a href="#"><img src="../../static/images/car1.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">法颂浪漫梦境50ML 香水女士持久清新淡香 送2ML小样3只</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
+                	<div class="img"><a href="#"><img src="../../static/images/{{ i.productId.img }}" width="58" height="58" /></a></div>
+                    <div class="name"><a href="#">{{ i.productId.name }}</a></div>
+                    <div class="price"><font color="#ff4e00">￥{{ i.productId.price }}</font> X1</div>
                 </li>
-                <li>
-                	<div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                </li>
-                <li>
-                	<div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                </li>
-            </ul>
-            <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
-            <div class="price_a"><a href="#">去购物车结算</a></div>
+                {% endfor %}
+{#                <li>#}
+{#                	<div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58" height="58" /></a></div>#}
+{#                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>#}
+{#                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>#}
+{#                </li>#}
+{#                <li>#}
+{#                	<div class="img"><a href="#"><img src="../../static/images/car2.jpg" width="58" height="58" /></a></div>#}
+{#                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>#}
+{#                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>#}
+{#                </li>#}
+{#            </ul>#}
+{#            <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>#}
+{#            <div class="price_a"><a href="#">去购物车结算</a></div>#}
             <!--End 购物车已登录 End-->
         </div>
     </div>
@@ -438,15 +440,13 @@
             </div>
         </div>  
         <!--End 商品分类详情 End-->                                                     
-    	<ul class="menu_r">                                                                                                                                               
-        	<li><a href="../goods/Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
+    	<ul class="menu_r">
+        	<li><a href="{% url 'goods:index' %}">首页</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=少女派">少女派</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=蜜饯">蜜饯</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=坚果">坚果</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=联想电脑">联想电脑</a></li>
+            <li><a href="{% url 'goods:kind' %}?kind=脑白金">脑白金</a></li>
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
@@ -487,7 +487,7 @@
               </tr>
               <tr>
                 <td>
-                	<a href="{% url 'index' %}">首页</a> &nbsp; &nbsp; <a href="#">用户中心</a>
+                	<a href="{% url 'index' %}">首页</a> &nbsp; &nbsp; <a href="{% url 'usercenter:index' %}">用户中心</a>
                 </td>
               </tr>
             </table>        	
