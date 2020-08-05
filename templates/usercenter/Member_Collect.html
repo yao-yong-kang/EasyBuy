@@ -218,8 +218,7 @@
                                 {{ i.productId.name }}
                             </td>
                             <td align="center">￥{{ i.productId.price }}</td>
-                            <td align="center">&nbsp; &nbsp; <a href="#" style="color:#ff4e00;">加入购物车</a>&nbsp;
-                                &nbsp; <a href="{% url 'usercenter:fav' %}?del={{ i.id }}">删除</a></td>
+                            <td align="center"><a href="{% url 'usercenter:fav' %}?del={{ i.id }}">删除</a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
