@@ -12,4 +12,5 @@ urlpatterns = [
     path('car4/',views.car4,name='goodcar4'), #不使用积分
     path('car5/',views.car5,name='goodcar5'), #余额不足
     path('dele/<id>/',views.dele,name='dele'),
+    path('success/',views.success,name='success'),
 ]

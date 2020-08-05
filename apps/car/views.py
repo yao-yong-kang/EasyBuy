@@ -98,23 +98,21 @@ def car3(request):
             order.number = number
             order.quantity = count
             order.save()  # 添加订单
+            for i in product_list:
+                quantity = i.number * i.productId.price
+                o = Order_detail()
+                o.quantity = i.number
+                o.cost = quantity
+                o.productId = i.productId
+                o.orderId = order
+                o.save()
+            Car.objects.filter(userId=user.id).delete()  # 清空购物车
+            return redirect('success')
+
         else:
             return render(request, 'goods_car/BuyCar_Two.html',
                           {'total': list[-1], "msg": "您还没有收货地址",'product_list': product_list, "user": user, 'add': add})
-        for i in product_list:
-            quantity = i.number * i.productId.price
-            o = Order_detail()
-            o.quantity = i.number
-            o.cost = quantity
-            o.productId = i.productId
-            o.orderId = order
-            o.save()
-        Car.objects.all().delete()  # 清空购物车
-        order1 = Order.objects.filter(userId_id=1).last()  # 当前用户的所有订单
-        order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
-        return render(request, 'goods_car/BuyCar_Three.html',
-                      {'user':user,'order': order1, 'order_detail': order_detail1,
-                       'product_list':product_list,'count':count,'list': list[-1],'money':money1})
+
 
 
 def car4(request):  # 不使用积分
@@ -145,22 +143,22 @@ def car4(request):  # 不使用积分
         order.quantity = count
         print('订单添加完成')
         order.save()  # 添加订单
+        for i in product_list:
+            quantity = i.number * i.productId.price
+            o = Order_detail()
+            o.quantity = i.number
+            o.cost = quantity
+            o.productId = i.productId
+            o.orderId = order
+            o.save()
+        Car.objects.filter(userId=user.id).delete()  # 清空购物车
+        return redirect('success')
     else:
         return render(request, 'goods_car/BuyCar_Two.html',
                       {'total': list[-1], "msg": "您还没有收货地址",'product_list': product_list, "user": user, 'add': add})
-    for i in product_list:
-        quantity = i.number * i.productId.price
-        o = Order_detail()
-        o.quantity = i.number
-        o.cost = quantity
-        o.productId = i.productId
-        o.orderId = order
-        o.save()
-    Car.objects.all().delete()  # 清空购物车
-    order1 = Order.objects.filter(userId_id=1).last()  # 当前用户的所有订单
-    order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
-    return render(request, 'goods_car/BuyCar_Three.html',
-                  {'user':user,'order': order1, 'order_detail': order_detail1,'product_list':product_list,'count':count,'list': list[-1],'money':money1})
+
+
+
 
 
 def car5(request):
@@ -171,3 +169,13 @@ def car5(request):
     money=user.money
     return render(request, 'goods_car/BuyCar_Four.html',{'user':user,"money":money,
                                                          "product_list":product_list,"count":count,"total":list[-1]})
+
+
+def success(request):
+    username=request.COOKIES.get('username')
+    user = UserProfile.objects.get(username=username)
+    order1 = Order.objects.filter(userId_id=user.id).last()  # 当前用户的所有订单
+    order_detail1 = Order_detail.objects.filter(orderId=order1)  # 当前用户的所以订单
+    cars = Car.objects.filter(userId=user.id)
+    return render(request, 'goods_car/BuyCar_Three.html',
+                  {'user': user, 'order': order1, 'order_detail': order_detail1,'cars': cars, 'list': list[-1]})

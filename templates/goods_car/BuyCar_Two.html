@@ -173,7 +173,7 @@
             	<li>
                 	<div class="img"><a href="#"><img src="../../static/images/{{ i.productId.img }}" width="58" height="58" /></a></div>
                     <div class="name"><a href="#">{{ i.productId.name }}</a></div>
-                    <div class="price"><font color="#ff4e00">￥{{ i.productId.price }}</font> X1</div>
+                    <div class="price"><font color="#ff4e00">￥{{ i.productId.price }}</font> X {{ i.number }}</div>
                 </li>
                 {% endfor %}
 {#                <li>#}
@@ -187,8 +187,6 @@
 {#                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>#}
 {#                </li>#}
             </ul>
-            <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>{{ total }}</span></div>
-            <div class="price_a"><a href="#">去购物车结算</a></div>
             <!--End 购物车已登录 End-->
         </div>
     </div>
@@ -497,7 +495,7 @@
             	<span class="fr"><a href="{% url 'usercenter:address' %}">修改</a></span>收货人信息
                 {% if msg %}
             <tr>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td width="500" height="300"><a href="{% url 'usercenter:order' %}"><font color="green">{{ msg }}</font></a></td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td width="500" height="300"><a href="{% url 'usercenter:address' %}"><font color="green">{{ msg }}</font></a></td>
             </tr>
         {% endif %}
             </div>
@@ -521,7 +519,7 @@
                 <td class="p_td">手机</td>
                 <td>{{ add.phone }}</td>
                   <td class="p_td">标志建筑</td>
-                <td>{{ add.sign }}</td>
+                <td>{{ add.sign|default:'' }}</td>
               </tr>
               <tr>
               </tr>
@@ -552,6 +550,8 @@
               <tr>
               	<td align="center"><input type="checkbox" name="city" /></td>
                 <td><b style="font-size:14px;">使用积分</b></td>
+                <td align="center"></td>
+                <td align="center"></td>
                 <td align="center">{{ user.score }}</td>
               </tr>
             </table>

@@ -200,7 +200,7 @@
         </span>
     </div>
     <div class="i_car">
-        <a href="{% url 'goodcar1' %}"><div class="car_t">购物车 [ <span>{{ num }}</span> ]</div></a>
+        <a href="{% url 'goodcar1' %}"><div class="car_t">购物车 [ <span>{{ cars|length }}</span> ]</div></a>
         <div class="car_bg">
        		<!--Begin 购物车未登录 Begin-->
             {% if username %}
